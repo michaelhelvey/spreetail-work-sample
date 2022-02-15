@@ -1,4 +1,4 @@
-describe("the application", () => {
+describe("REPL", () => {
 	it("works", () => {
 		expect(2 + 2).toEqual(4)
 	})

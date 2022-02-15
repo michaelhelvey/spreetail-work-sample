@@ -19,7 +19,7 @@ project that should not be cross-platform._
 
 **Execution**
 
--   `yarn start` or `npm start` (this will open a REPL which will allow execution of commands as
+-   `(yarn|npm) start -- repl` (this will open a REPL which will allow execution of commands as
     specified in the requirements document)
 
 ## Development
