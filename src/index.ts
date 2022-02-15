@@ -1,76 +1,16 @@
-import readline from "readline"
 import { program } from "commander"
+import { REPL } from "./repl"
+import { InMemoryStorage } from "./storage"
+import { multiValueDictionaryHandler } from "./command"
 
-import { Command } from "./command"
+// Bootstrapping code for our application
 
-/*
- ***************************************************************
- * Application logic
- ***************************************************************
- */
-
-/*
- ***************************************************************
- * REPL Frontend
- ***************************************************************
- */
-
-function processREPLCommand(command: string): void {
-	switch (command) {
-		case Command.KEYS:
-			break
-		default:
-			console.log(`Error: unknown command: ${command}`)
-	}
-}
-
-const availableCommands = [
-	"KEYS",
-	"MEMBERS",
-	"ADD",
-	"REMOVE",
-	"REMOVEALL",
-	"CLEAR",
-	"KEYEXISTS",
-	"MEMBEREXISTS",
-	"ALLMEMBERS",
-	"ITEMS",
-]
-
-/**
- * Provides an auto-completion interface for readline.createInterface()
- */
-const replCompleter =
-	(completions: string[]) =>
-	(input: string): [string[], string] => {
-		const hits = completions.filter((c) => c.startsWith(input))
-		return [hits.length ? hits : completions, input]
-	}
-
-/**
- * Runs a REPL that will prompt the user for a command, and then run that
- * command against the application
- */
-function runREPL(): void {
-	const rl = readline.createInterface({
-		input: process.stdin,
-		output: process.stdout,
-		completer: replCompleter(availableCommands),
-	})
-
-	rl.prompt()
-
-	rl.on("SIGINT", () => {
-		console.log("Goodbye!")
-		rl.close()
-		process.exit(0)
-	})
-
-	rl.on("line", (input: string) => {
-		processREPLCommand(input)
-		rl.prompt()
-	})
-}
+const storage = new InMemoryStorage<string, string>()
+const repl = new REPL(
+	process.stdin,
+	process.stdout,
+	multiValueDictionaryHandler(storage)
+)
 
 program
 	.name("multivalue-dict")
@@ -80,6 +20,8 @@ program
 program
 	.command("repl")
 	.description("Start a REPL to run commands against the in-memory storage")
-	.action(runREPL)
+	// safety: we know this is bound because we explicitly bind it in the constructor
+	// eslint-disable-next-line @typescript-eslint/unbound-method
+	.action(repl.run)
 
 program.parse()

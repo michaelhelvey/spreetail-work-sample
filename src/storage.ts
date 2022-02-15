@@ -121,6 +121,9 @@ export class InMemoryStorage<K, V> implements Storage<K, V> {
 		}
 	}
 
+	/*
+	 * Returns all the items in the dictionary as key-value pairs
+	 */
 	public *items(): IterableIterator<[K, V]> {
 		for (const [key, set] of this.innerStorage.entries()) {
 			for (const member of set.values()) {
