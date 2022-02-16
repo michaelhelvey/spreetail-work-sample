@@ -19,7 +19,7 @@ project that should not be cross-platform._
 
 **Execution**
 
--   `(yarn|npm) start -- repl` (this will open a REPL which will allow execution of commands as
+-   `yarn start repl` or `npm start -- repl` (this will open a REPL which will allow execution of commands as
     specified in the requirements document)
 
 ## Development Utilities
@@ -27,7 +27,7 @@ project that should not be cross-platform._
 Several commands are provided for development; for brevity I've only specified
 the `yarn` version of these commands.
 
--   `yarn test` Runs the unit & integration tests for the application with Jest
+-   `yarn test` Runs the unit tests for the application with Jest
 -   `yarn lint` Runs eslint against the source code.
 -   `yarn format` Runs the opininated linter/formatter
     [prettier](https://prettier.io/) against the code base. Note that prettier
