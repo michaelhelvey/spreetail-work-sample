@@ -24,12 +24,13 @@ export class REPL {
 	constructor(
 		inputStream: NodeJS.ReadableStream,
 		outputStream: NodeJS.WritableStream,
-		commandHandler: CommandHandler
+		commandHandler: CommandHandler,
+		autoCompleter: (input: string) => [string[], string]
 	) {
 		this.rl = readline.createInterface({
 			input: inputStream,
 			output: outputStream,
-			// TODO: add an auto-completion interface
+			completer: autoCompleter,
 		})
 		this.outputStream = outputStream
 		this.commandHandler = commandHandler
