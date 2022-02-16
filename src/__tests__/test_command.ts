@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/unbound-method: 0 */
 
 import type { Storage } from "../storage"
-import { _private, multiValueDictionaryHandler } from "../command"
+import { _private, stringStorageHandler } from "../command"
 
 const { responseFromIterable, singleValueResponse, checkArgsLen } = _private
 
@@ -32,7 +32,7 @@ describe("command handler", () => {
 
 	beforeEach(() => {
 		storageMock = {} as Storage<string, string>
-		handler = multiValueDictionaryHandler(storageMock)
+		handler = stringStorageHandler(storageMock)
 	})
 
 	it("unknown command", () => {

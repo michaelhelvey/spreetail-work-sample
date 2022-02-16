@@ -43,13 +43,14 @@ function checkArgsLen(argsLen: number, expectedLen: number, syntax: string) {
 }
 
 /*
- * Given some backing storage for strings, implements our application logic for
- * handling commands.
+ * Given some backing storage, implements our application logic for handling
+ * commands with string key/value pairs. Throws an Error instance on any syntax
+ * error and allows errors from the backing storage instance to bubble up.
  *
- * Note: Currently is string specific so that we don't have to write some kind
- * of key/value parse to string sort of interface.
+ * Note: currently this is specialized for strings as this allows us to avoid
+ * writing any kind of more detailed parser interface for serializing types.
  */
-export const multiValueDictionaryHandler =
+export const stringStorageHandler =
 	(storage: Storage<string, string>) =>
 	(input: string): string => {
 		const args = input.split(" ")
@@ -115,6 +116,8 @@ export const multiValueDictionaryHandler =
 		}
 	}
 
+// Export private utilities for our tests without exposing them directly to the
+// rest of the module.
 export const _private = {
 	responseFromIterable,
 	singleValueResponse,

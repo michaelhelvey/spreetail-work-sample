@@ -44,7 +44,8 @@ export class InMemoryStorage<K, V> implements Storage<K, V> {
 	}
 
 	/*
-	 * Returns the collection of values for the given key. Throws an error if the key does not exist
+	 * Returns the collection of values for the given key. Throws an error if
+	 * the key does not exist.
 	 */
 	public members(key: K): Iterable<V> {
 		if (!this.innerStorage.has(key)) {
@@ -85,14 +86,14 @@ export class InMemoryStorage<K, V> implements Storage<K, V> {
 	}
 
 	/*
-	 * Removes all keys and all members from the dictionary
+	 * Removes all keys and all members from the dictionary.
 	 */
 	public clear(): void {
 		this.innerStorage.clear()
 	}
 
 	/*
-	 * Returns whether a key exists or not
+	 * Returns whether a key exists or not.
 	 */
 	public keyExists(key: K): boolean {
 		return this.innerStorage.has(key)
@@ -107,7 +108,7 @@ export class InMemoryStorage<K, V> implements Storage<K, V> {
 	}
 
 	/*
-	 * Returns all the members in the dictionary
+	 * Returns all the members in the dictionary.
 	 */
 	public *allMembers(): Iterable<V> {
 		for (const item of this.items()) {
@@ -116,7 +117,7 @@ export class InMemoryStorage<K, V> implements Storage<K, V> {
 	}
 
 	/*
-	 * Returns all the items in the dictionary as key-value pairs
+	 * Returns all the items in the dictionary as key-value pairs.
 	 */
 	public *items(): Iterable<[K, V]> {
 		for (const [key, set] of this.innerStorage.entries()) {
@@ -127,7 +128,7 @@ export class InMemoryStorage<K, V> implements Storage<K, V> {
 	}
 
 	/*
-	 * Gets or creates the associated set from innerStorage for a given key
+	 * Gets or creates the associated set from innerStorage for a given key.
 	 */
 	private getOrCreateSetForKey(key: K): Set<V> {
 		if (!this.innerStorage.has(key)) {

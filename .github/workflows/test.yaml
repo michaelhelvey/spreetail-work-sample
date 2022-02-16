@@ -22,6 +22,8 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: Install dependencies
               run: yarn --dev
+            - run: sudo apt-get install expect
             - run: yarn lint
             - run: yarn format:check
             - run: yarn test
+            - run: timeout 5 ./scripts/integration_test.sh

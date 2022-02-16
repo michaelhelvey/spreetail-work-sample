@@ -22,7 +22,7 @@ project that should not be cross-platform._
 -   `(yarn|npm) start -- repl` (this will open a REPL which will allow execution of commands as
     specified in the requirements document)
 
-## Development
+## Development Utilities
 
 Several commands are provided for development; for brevity I've only specified
 the `yarn` version of these commands.

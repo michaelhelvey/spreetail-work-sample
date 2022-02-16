@@ -1,7 +1,7 @@
 import { program } from "commander"
 import { REPL } from "./repl"
 import { InMemoryStorage } from "./storage"
-import { multiValueDictionaryHandler } from "./command"
+import { stringStorageHandler } from "./command"
 
 // Bootstrapping code for our application
 
@@ -9,7 +9,7 @@ const storage = new InMemoryStorage<string, string>()
 const repl = new REPL(
 	process.stdin,
 	process.stdout,
-	multiValueDictionaryHandler(storage)
+	stringStorageHandler(storage)
 )
 
 program
