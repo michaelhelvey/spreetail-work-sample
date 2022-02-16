@@ -77,9 +77,7 @@ describe("storage", () => {
 	it("can get whether a member exists for a given key", () => {
 		storage.add("foo", "bar")
 		expect(storage.memberExists("foo", "bar")).toEqual(true)
-		expect(() => storage.memberExists("blah", "bar")).toThrowError(
-			"key does not exist"
-		)
+		expect(storage.memberExists("quux", "baz")).toEqual(false)
 	})
 
 	it("can get all members", () => {

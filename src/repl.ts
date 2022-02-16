@@ -59,7 +59,7 @@ export class REPL {
 					typeof e.message === "string"
 						? `${(e as Error).message}\n`
 						: `${e as string}\n`
-				this.outputStream.write(message)
+				this.outputStream.write(`) ERROR, ${message}`)
 			}
 			this.rl.prompt()
 		})

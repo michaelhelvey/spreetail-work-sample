@@ -3,15 +3,15 @@
  */
 export interface Storage<K, V> {
 	add(key: K, value: V): void
-	keys(): IterableIterator<K>
-	members(key: K): IterableIterator<V>
+	keys(): Iterable<K>
+	members(key: K): Iterable<V>
 	remove(key: K, value: V): void
 	removeAll(key: K): void
 	clear(): void
 	keyExists(key: K): boolean
 	memberExists(key: K, value: V): boolean
-	allMembers(): IterableIterator<V>
-	items(): IterableIterator<[K, V]>
+	allMembers(): Iterable<V>
+	items(): Iterable<[K, V]>
 }
 
 export class InMemoryStorage<K, V> implements Storage<K, V> {
@@ -39,14 +39,14 @@ export class InMemoryStorage<K, V> implements Storage<K, V> {
 	/*
 	 * Returns all the the keys in the dictionary.
 	 */
-	public keys(): IterableIterator<K> {
+	public keys(): Iterable<K> {
 		return this.innerStorage.keys()
 	}
 
 	/*
 	 * Returns the collection of values for the given key. Throws an error if the key does not exist
 	 */
-	public members(key: K): IterableIterator<V> {
+	public members(key: K): Iterable<V> {
 		if (!this.innerStorage.has(key)) {
 			throw new Error("key does not exist")
 		}
@@ -100,22 +100,16 @@ export class InMemoryStorage<K, V> implements Storage<K, V> {
 
 	/*
 	 * Returns whether a member exists within a given key.  Returns false if
-	 * the key does not exist.
+	 * the member or key does not exist.
 	 */
 	public memberExists(key: K, value: V): boolean {
-		// NOTE: specification does not detail whether this method should throw
-		// if key does not exist, but assuming that it should, for API
-		// consistency
-		this.checkForKey(key)
-
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		return this.innerStorage.get(key)!.has(value)
+		return !!this.innerStorage.get(key)?.has(value)
 	}
 
 	/*
 	 * Returns all the members in the dictionary
 	 */
-	public *allMembers(): IterableIterator<V> {
+	public *allMembers(): Iterable<V> {
 		for (const item of this.items()) {
 			yield item[1]
 		}
@@ -124,7 +118,7 @@ export class InMemoryStorage<K, V> implements Storage<K, V> {
 	/*
 	 * Returns all the items in the dictionary as key-value pairs
 	 */
-	public *items(): IterableIterator<[K, V]> {
+	public *items(): Iterable<[K, V]> {
 		for (const [key, set] of this.innerStorage.entries()) {
 			for (const member of set.values()) {
 				yield [key, member]
